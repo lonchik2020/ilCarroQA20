@@ -33,34 +33,32 @@ public class LoginTests {
 5.validate by text: "Logged in success" in the element //h2[@class='message']
     */
 
-        WebElement btnLogin = driver.findElement(By.xpath(""));
+        WebElement btnLogin = driver.findElement(By.xpath("//a[contains(@href, '/login')]"));
         btnLogin.click();
 
-        WebElement inputEmail = driver.findElement(By.xpath(""));
+        WebElement inputEmail = driver.findElement(By.xpath("//input[@id='email']"));
         inputEmail.click();
         inputEmail.clear();
-        inputEmail.sendKeys();
+        inputEmail.sendKeys("lonchik_7_7@walla.co.il");
 
-        WebElement inputPassword = driver.findElement(By.xpath(""));
+        WebElement inputPassword = driver.findElement(By.xpath("//input[@id='password']"));
         inputPassword.click();
         inputPassword.clear();
-        inputPassword.sendKeys("");
+        inputPassword.sendKeys("Samimi@44@");
 
-        WebElement btnYalla = driver.findElement(By.xpath(""));
+        WebElement btnYalla = driver.findElement(By.xpath("//button[@type='submit']"));
         btnYalla.click();
+
+        //Thread.sleep(15000);
 
         WebElement textMessagePopUpH2 = driver.findElement(By.xpath("//h2[@class='message']"));
         String textMessageH2 = textMessagePopUpH2.getText().trim().toUpperCase();
         String expectedResult = "Logged in success".toUpperCase();
+        System.out.println(textMessageH2);
 
         Assert.assertEquals(textMessageH2,expectedResult);
 
-
     }
-
-
-
-
 
     @AfterClass
     public void postConditions(){
