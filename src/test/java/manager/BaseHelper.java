@@ -24,6 +24,11 @@ public class BaseHelper {
         return driver.findElements(locator);
     }
 
+    public boolean isElementExist(By locator){
+        return !findElementsBase(locator).isEmpty();
+       // return findElementsBase(locator).size()>0;
+    }
+
 
     public void clickBase(By locator){
         WebElement el = findElementBase(locator);
@@ -60,7 +65,7 @@ public class BaseHelper {
        js.executeScript(locator);
     }
 
-    public void clickByXY(By locator, int down, int right){//down 10 , right 12
+    public void clickByXY(By locator, double down, int right){//down 10 , right 12
         //creating object of rectangle -- we transfer there locator and it writes information about the element
         Rectangle rect = findElementBase(locator).getRect();
         int x = rect.getX()+ (rect.getWidth()/ 8);

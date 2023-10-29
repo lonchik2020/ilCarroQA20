@@ -11,13 +11,16 @@ public class BaseTest {
     RandomUtils randomUtils = new RandomUtils();
 
     @BeforeSuite
-    public  void setup(){
-        app.init();
-    }
+    public  void setup(){app.init();}
 
     @AfterSuite
-    public void stop(){
-        app.tearDown();
+    public void stop(){app.tearDown();}
+
+
+    public void logoutIfLogin(){
+        if(app.getUserHelper().btnLogoutExist()){
+            app.getUserHelper().logout();
+        }
     }
 
 }

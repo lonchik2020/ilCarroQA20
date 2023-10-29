@@ -4,7 +4,9 @@ import dto.UserDTO;
 import dto.UserDTOLombok;
 import dto.UserDTOWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 
 public class UserHelper extends BaseHelper {
 
@@ -23,9 +25,12 @@ public class UserHelper extends BaseHelper {
     By inputEmailReg = By.xpath("//input[@id='email']");
     By inputPasswordReg = By.xpath("//input[@id='password']");
     String btnRegNewUser = "document.querySelector('#terms-of-use').click();";
+    String btnOkPopUpStr = "document.querySelector('[type='button']').click();";
     By checkBoxReg = By.xpath("//label[@for='terms-of-use']");
     By btnYallaReg = By.xpath("//button[@type='submit']");
     By textPopUpSuccessRegH1 = By.xpath("//div[@class='dialog-container']//h1[@class='title']");
+    By btnLogout = By.xpath("//a[contains(@href, 'logout')]");
+    By btnOkPopUp = By.xpath("//button[@type='button']");
 
 
 
@@ -53,7 +58,15 @@ public class UserHelper extends BaseHelper {
 
     public boolean validatePopUpMessageSuccessAfterLogin() {
         return isTextEqual(textSuccessLoginPopUp, "Logged in success");
+
     }
+
+
+    public boolean validatePopUpMessageLoginIncorrect() {
+        return isTextEqual(textSuccessLoginPopUp, "\"Login or Password incorrect\"");
+    }
+
+
 
     public void fillRegistrationForm(UserDTOLombok user) {
         clickBase(btnOpenRegForm);
@@ -72,6 +85,24 @@ public class UserHelper extends BaseHelper {
     public boolean validatePopUpMessageSuccessAfterRegistration() {
         String expectedResult = "Registered".toUpperCase();
         return isTextEqual(textPopUpSuccessRegH1, expectedResult);
+
+    }
+
+    public boolean btnLogoutExist() {
+        return isElementExist(btnLogout);
+    }
+
+    public void logout() {
+        clickBase(btnLogout);
+    }
+
+    public void clickOkPopUpSuccessLogin() {
+        //jsClickBase(btnOkPopUpStr);
+        //clickByXY(btnOkPopUp, 0.5, 2);
+        Actions actions = new Actions(driver);
+
+        //Use the sendKeys method to stimulate pressing the "Enter" key on the active element
+        actions.sendKeys(Keys.ENTER).perform();
 
     }
 }
