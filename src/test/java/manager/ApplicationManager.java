@@ -21,6 +21,10 @@ public class ApplicationManager {
         userHelper = new UserHelper(driver);//2
     }
 
+    public void navigateToMainPage(){
+        driver.navigate().to("https://ilcarro.web.app/search");
+    }
+
     public UserHelper getUserHelper() {//3
         return userHelper;
     }

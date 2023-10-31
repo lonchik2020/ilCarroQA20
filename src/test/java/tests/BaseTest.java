@@ -1,5 +1,6 @@
 package tests;
 
+import dto.UserDTOLombok;
 import manager.ApplicationManager;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -9,6 +10,11 @@ public class BaseTest {
     static ApplicationManager app = new ApplicationManager();
     //static - to create this object before start of project
     RandomUtils randomUtils = new RandomUtils();
+
+    UserDTOLombok userDTOLombok = UserDTOLombok.builder()
+            .email("lonchik_7_7@walla.co.il")
+            .password("Samimi@44@").build();
+
 
     @BeforeSuite
     public  void setup(){app.init();}

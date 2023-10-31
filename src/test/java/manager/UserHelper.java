@@ -31,7 +31,8 @@ public class UserHelper extends BaseHelper {
     By textPopUpSuccessRegH1 = By.xpath("//div[@class='dialog-container']//h1[@class='title']");
     By btnLogout = By.xpath("//a[contains(@href, 'logout')]");
     By btnOkPopUp = By.xpath("//button[@type='button']");
-
+    By errorMessageWrongEmailReg = By.xpath("//input[@autocomplete='email']/..//div//div");
+    By errorMessageIncorrectPasswordReg = By.xpath("//input[@autocomplete='new-password']/..//div//div");
 
 
 
@@ -99,10 +100,31 @@ public class UserHelper extends BaseHelper {
     public void clickOkPopUpSuccessLogin() {
         //jsClickBase(btnOkPopUpStr);
         //clickByXY(btnOkPopUp, 0.5, 2);
+        clickBase(textPopUpSuccessRegH1);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         Actions actions = new Actions(driver);
-
         //Use the sendKeys method to stimulate pressing the "Enter" key on the active element
-        actions.sendKeys(Keys.ENTER).perform();
+        actions.sendKeys(Keys.ESCAPE).perform();
 
+        //typeTextBase(textPopUpSuccessRegH1, String.valueOf(Keys.ESCAPE));
+
+    }
+
+    public boolean validateMessageIncorrectEmail() {
+        return isTextEqual(errorMessageWrongEmailReg, "Wrong email format");
+
+    }
+
+    public boolean validateMessageWrongPassword() {
+        return isTextEqual(errorMessageIncorrectPasswordReg, "PASSWORD MUST CONTAIN 1 UPPERCASE LETTER, 1 LOWERCASE LETTER, 1 NUMBER AND ONE SPECIAL SYMBOL OF [@$#^&*!]");
+    }
+
+    public boolean validateErrorEmptyEmailReg() {
+        return isTextEqual(errorMessageWrongEmailReg, "Email is required");
     }
 }
