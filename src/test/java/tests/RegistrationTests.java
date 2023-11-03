@@ -2,30 +2,28 @@ package tests;
 
 import dto.UserDTOLombok;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class RegistrationTests extends BaseTest{
 
-//    @BeforeTest
-//    public void preconditionsLogin(){
-//        //app.navigateToMainPage();
-//        logoutIfLogin();//to open this line
-//        // user login
-//        // user open web not login
-//
-//    }
-//
-//    @AfterTest
-//    public void postconditionsLogin(){
-//        app.getUserHelper().clickOkPopUpSuccessLogin();//to open this line
-//        try {
-//            Thread.sleep(2000);
+    @BeforeTest
+    public void preconditionsLogin(){
+//       //app.navigateToMainPage();
+        logoutIfLogin();
+        // user login
+        // user open web not login
+
+    }
+
+   @AfterTest
+    public void postconditionsLogin(){
+        app.getUserHelper().clickOkPopUpSuccessLogin();
+   //     try {
+ //           Thread.sleep(2000);
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
-  //  }
+    }
 
 
     @Test
@@ -59,7 +57,7 @@ public class RegistrationTests extends BaseTest{
     }
 
     @Test
-    public void negativeRegistrationWrongPassword(){
+    public void negativeRegistrationWrongPassword(){//
         String email = randomUtils.generateEmail(7);
 
         UserDTOLombok user = UserDTOLombok.builder()

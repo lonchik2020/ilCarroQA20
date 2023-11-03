@@ -4,23 +4,20 @@ import dto.UserDTO;
 import dto.UserDTOLombok;
 import dto.UserDTOWith;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class LoginTests extends BaseTest{
 
-    @BeforeTest
+    @BeforeMethod
     public void preconditionsLogin(){
-        //app.navigateToMainPage();
+        // app.getUserHelper().refreshPage();
+        //  app.navigateToMainPage();
         logoutIfLogin();
         // user login
         // user open web not login
-
     }
 
-    @AfterTest
+    @AfterMethod
     public void postconditionsLogin(){
         app.getUserHelper().clickOkPopUpSuccessLogin();
 //        try {
@@ -54,6 +51,12 @@ public class LoginTests extends BaseTest{
     @Test
     public void positiveLogin(){
         app.getUserHelper().loginUserDtoLombok(userDTOLombok);
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
     }
 

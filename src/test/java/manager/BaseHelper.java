@@ -2,6 +2,9 @@ package manager;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
@@ -65,7 +68,8 @@ public class BaseHelper {
        js.executeScript(locator);
     }
 
-    public void clickByXY(By locator, double down, int right){//down 10 , right 12
+    public void clickByXY(By locator, double down, int right){
+        //down 10 , right 12
         //creating object of rectangle -- we transfer there locator and it writes information about the element
         Rectangle rect = findElementBase(locator).getRect();
         int x = rect.getX()+ (rect.getWidth()/ 8);
@@ -82,6 +86,11 @@ public class BaseHelper {
 //        Actions actions = new Actions(driver);
 //        actions.moveByOffset(x,y).click().perform();
 
-
     }
+
+    public void refreshPage() {
+        driver.navigate().refresh();;
+    }
+
+
 }
