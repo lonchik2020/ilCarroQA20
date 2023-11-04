@@ -27,7 +27,7 @@ public class LoginTests extends BaseTest{
 //        }
     }
 
-    @Test
+    @Test(priority = 1, invocationCount = 2)
     public void positiveLoginUserDTO(){
         //create user for testing
         UserDTO userDTO = new UserDTO("lonchik_7_7@walla.co.il", "Samimi@44@");
@@ -37,7 +37,7 @@ public class LoginTests extends BaseTest{
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
     }
 
-    @Test
+    @Test(priority = 2)
     public void positiveLoginUserDTOWith(){
         //create user for testing
         UserDTOWith userDTOWith = new UserDTOWith().withEmail("lonchik_7_7@walla.co.il")
@@ -48,7 +48,7 @@ public class LoginTests extends BaseTest{
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
     }
 
-    @Test
+    @Test(priority = 3)
     public void positiveLogin(){
         app.getUserHelper().loginUserDtoLombok(userDTOLombok);
         try {
@@ -61,16 +61,16 @@ public class LoginTests extends BaseTest{
     }
 
 
-    @Test
+    @Test(priority = 4)
     public void negativePasswordWithoutSymbol(){
         UserDTOLombok userDTOLombok = UserDTOLombok.builder()
                 .email("lonchik_7_7@walla.co.il")
-                .password("Samimi@444").build();
+                .password("Samimi444").build();
         app.getUserHelper().loginUserDtoLombok(userDTOLombok);
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageLoginIncorrect());
     }
 
-    @Test
+    @Test(priority = 5)
     public void negativePasswordWithoutNumbers(){
         UserDTOLombok userDTOLombok = UserDTOLombok.builder()
                 .email("lonchik_7_7@walla.co.il")
@@ -79,7 +79,7 @@ public class LoginTests extends BaseTest{
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageLoginIncorrect());
     }
 
-    @Test
+    @Test(priority = 6)
     public void negativePasswordWithoutLetters(){
         UserDTOLombok userDTOLombok = UserDTOLombok.builder()
                 .email("lonchik_7_7@walla.co.il")

@@ -5,11 +5,15 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 
 public class BaseHelper {
+
+    Logger logger = LoggerFactory.getLogger(BaseHelper.class);//creation of Logger
 
     WebDriver driver;
 
@@ -51,7 +55,7 @@ public class BaseHelper {
     }
 
     public boolean isTextEqual(By locator, String expectedResult){
-        String actualResult = getTextBase(locator);
+        String actualResult = getTextBase(locator).toUpperCase();
         expectedResult = expectedResult.toUpperCase();
 
         if(expectedResult.equals(actualResult)){
