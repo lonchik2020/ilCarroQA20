@@ -1,0 +1,3 @@
+2023-11-04 01:45:56,157 INFO m.ApplicationManager [ApplicationManager.java:27] navigated to the url: https://ilcarro.web.app/search
+2023-11-04 01:46:06,203 INFO t.BaseTest [BaseTest.java:47] stop method: negativeRegistrationWrongEmail
+2023-11-04 01:46:06,204 INFO t.BaseTest [BaseTest.java:42] start method: negativeRegistrationWrongEmail

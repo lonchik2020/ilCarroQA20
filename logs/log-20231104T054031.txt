@@ -1,0 +1,3 @@
+2023-11-04 05:40:35,545 INFO m.ApplicationManager [ApplicationManager.java:27] navigated to the url: https://ilcarro.web.app/search
+2023-11-04 05:40:35,608 INFO t.BaseTest [BaseTest.java:47] stop method: positiveLoginUserDTO
+2023-11-04 05:40:35,612 INFO t.BaseTest [BaseTest.java:42] start method: positiveLoginUserDTO

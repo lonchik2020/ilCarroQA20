@@ -1,0 +1,10 @@
+2023-11-04 06:44:58,087 INFO m.ApplicationManager [ApplicationManager.java:27] navigated to the url: https://ilcarro.web.app/search
+2023-11-04 06:44:58,089 INFO m.TestNGListener [TestNGListener.java:51] start test - on start - :Gradle test
+2023-11-04 06:44:58,120 INFO t.BaseTest [BaseTest.java:51] stop method: positiveLoginUserDTO
+2023-11-04 06:44:58,121 INFO t.BaseTest [BaseTest.java:46] start method: positiveLoginUserDTO
+2023-11-04 06:45:08,137 INFO m.TestNGListener [TestNGListener.java:16] stared test: positiveLoginUserDTO
+2023-11-04 06:45:09,183 INFO m.TestNGListener [TestNGListener.java:22] test success: positiveLoginUserDTO
+2023-11-04 06:45:09,210 INFO m.TestNGListener [TestNGListener.java:16] stared test: positiveLoginUserDTO
+2023-11-04 06:45:09,211 INFO m.TestNGListener [TestNGListener.java:34] test skipped: positiveLoginUserDTO
+2023-11-04 06:45:09,214 INFO m.TestNGListener [TestNGListener.java:57] all code executed: passed tests: [ResultMap map=[[TestResult name=positiveLoginUserDTO status=SUCCESS method=LoginTests.positiveLoginUserDTO()[pri:1, instance:tests.LoginTests@581ac8a8] output={null}]]]
+2023-11-04 06:45:09,214 INFO m.TestNGListener [TestNGListener.java:58] all code executed: failed tests: [ResultMap map=[]]
