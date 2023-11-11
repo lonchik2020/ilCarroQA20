@@ -6,28 +6,22 @@ import org.testng.annotations.*;
 
 public class RegistrationTests extends BaseTest{
 
-    @BeforeTest
-    public void preconditionsLogin(){
-//       //app.navigateToMainPage();
-        logoutIfLogin();
-        // user login
-        // user open web not login
-
+    @AfterMethod(alwaysRun = true)
+    public void postConditionsBeforeRegMethod(){
+        if(flagOfPopUpMessage) {
+            flagOfPopUpMessage = false;
+            app.getUserHelper().clickOkPopUpSuccessLogin();
+        }
+        if(flagOfSuccessLogin){
+            flagOfSuccessLogin = false;
+            app.getUserHelper().logout();
+        }
     }
 
-  // @AfterTest
-  //  public void postconditionsLogin(){
-  //      app.getUserHelper().clickOkPopUpSuccessLogin();
-   //     try {
- //           Thread.sleep(2000);
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-   // }
 
-
-    @Test
+    @Test(groups={"smoke","regression"})
     public void positiveRegistration(){
+        app.getUserHelper().refreshPage();
         String email = randomUtils.generateEmail(7);
 
         UserDTOLombok user = UserDTOLombok.builder()
@@ -38,6 +32,19 @@ public class RegistrationTests extends BaseTest{
                 .build();
 
         app.getUserHelper().fillRegistrationForm(user);
+        //flagOfSuccessLogin = true;
+        //flagOfPopUpMessage = true;
+
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        flagOfSuccessLogin = true;
+        flagOfPopUpMessage = true;
+
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterRegistration());
     }
 
@@ -53,7 +60,14 @@ public class RegistrationTests extends BaseTest{
                 .build();
 
         app.getUserHelper().fillRegistrationForm(user);
-        Assert.assertTrue(app.getUserHelper().validateMessageIncorrectEmail());
+        //flagOfPopUpMessage = true;
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assert.assertTrue(app.getUserHelper().validateMessageIncorrectEmailReg());
     }
 
     @Test
@@ -68,7 +82,14 @@ public class RegistrationTests extends BaseTest{
                 .build();
 
         app.getUserHelper().fillRegistrationForm(user);
-        Assert.assertTrue(app.getUserHelper().validateMessageWrongPassword());
+        //flagOfPopUpMessage = true;
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assert.assertTrue(app.getUserHelper().validateMessageWrongPasswordReg());
     }
 
     @Test
@@ -82,6 +103,13 @@ public class RegistrationTests extends BaseTest{
                 .build();
 
         app.getUserHelper().fillRegistrationForm(user);
+        //flagOfPopUpMessage = true;
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         Assert.assertTrue(app.getUserHelper().validateErrorEmptyEmailReg());
     }
 }

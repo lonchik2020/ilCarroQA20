@@ -6,86 +6,138 @@ import dto.UserDTOWith;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.lang.reflect.Method;
+
 public class LoginTests extends BaseTest{
 
-    @BeforeMethod
-    public void preconditionsLogin(){
-        // app.getUserHelper().refreshPage();
-        //  app.navigateToMainPage();
-        logoutIfLogin();
-        // user login
-        // user open web not login
-    }
 
-    @AfterMethod
-    public void postconditionsLogin(){
-        app.getUserHelper().clickOkPopUpSuccessLogin();
+   // @BeforeClass
+   // public void preConditionsBeforeClass(){
+     //   app.navigateToMainPage();
+    //    app.getUserHelper().refreshPage();
+     //   app.getUserHelper().openLoginPage();
+//}
+
+    @AfterMethod(alwaysRun = true)
+    public void postConditionsLoginMethod(){
+        if(flagOfPopUpMessage) {
+            flagOfPopUpMessage = false;
+            app.getUserHelper().clickOkPopUpSuccessLogin();
+        }
+        if(flagOfSuccessLogin){
+            flagOfSuccessLogin = false;
+            app.getUserHelper().logout();
+        }
+
+   }
+
+
+    @Test(groups={"smoke"})
+    public void positiveLoginUserDTO(){
+        UserDTO userDTO = new UserDTO("lonchik_7_7@walla.co.il", "Samimi@44@");
+        logger.info("logger info - start test positiveLoginUserDTO");
+//        logger.info(String
+//                .format("in the next function: fill email input with email: %s and with the password: %s and click on button login",
+//                        userDTO.getEmail(), userDTO.getPassword()));
+        app.getUserHelper().login(userDTO);
+        flagOfSuccessLogin = true;
+        flagOfPopUpMessage = true;
+
 //        try {
-//            Thread.sleep(2000);
+//            Thread.sleep(3000);
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
-    }
 
-    @Test(priority = 1, invocationCount = 2)
-    public void positiveLoginUserDTO(){
-        //create user for testing
-        UserDTO userDTO = new UserDTO("lonchik_7_7@walla.co.il", "Samimi@44@");
-        //transfer the user inside the login method
-        app.getUserHelper().login(userDTO);
-        //asking for validation and expecting to get true
+        logger.info("assertTrue validation");
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
+        //app.getUserHelper().clickOkPopUpSuccessLogin();
     }
 
-    @Test(priority = 2)
+    @Test
     public void positiveLoginUserDTOWith(){
-        //create user for testing
         UserDTOWith userDTOWith = new UserDTOWith().withEmail("lonchik_7_7@walla.co.il")
                 .withPassword("Samimi@44@");
-        //transfer the user inside the login method
+        logger.info("logger info - start test positiveLoginUserDTOWith ");
         app.getUserHelper().login(userDTOWith);
-        //asking for validation and expecting to get true
+        flagOfSuccessLogin = true;
+        flagOfPopUpMessage = true;
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
     }
 
-    @Test(priority = 3)
-    public void positiveLogin(){
-        app.getUserHelper().loginUserDtoLombok(userDTOLombok);
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
+    @Test(groups={"regression"})
+    public void positiveLoginUserDTOLombok(Method method){
+        long timeStart, timeFinish;
+
+        UserDTOLombok user = UserDTOLombok.builder()
+                .email("lonchik_7_7@walla.co.il")
+                .password("Samimi@44@")
+                .build();
+
+        timeStart = System.currentTimeMillis();
+        logger.info("logger info - start test positiveLoginUserDTOLombok ----> " + method.getName());
+        logger.info("Test date  ----> " + user.toString());
+
+        app.getUserHelper().loginUserDtoLombok(user);
+        flagOfSuccessLogin = true;
+        flagOfPopUpMessage = true;
+//        try {
+//            Thread.sleep(1000);
+//       } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+        Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
+        timeFinish = System.currentTimeMillis();
+        logger.info("Method finish ----> " + method.getName() + "method duration" + (timeFinish - timeStart));
+    }
+
+
+    @Test(groups={"smoke"})
+    public void negativeLoginPasswordWithoutSymbol() {
+        UserDTOLombok user = UserDTOLombok.builder()
+                .email("lonchik_7_7@walla.co.il")
+                .password("Samimi444").build();
+        app.getUserHelper().loginUserDtoLombok(user);
+        flagOfPopUpMessage = true;
+                try {
+            Thread.sleep(1000);
+       } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
 
-        Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
+        Assert.assertTrue(app.getUserHelper().validateMessageAlertLoginOrPasswordIncorrect());
     }
 
-
-    @Test(priority = 4)
-    public void negativePasswordWithoutSymbol(){
-        UserDTOLombok userDTOLombok = UserDTOLombok.builder()
-                .email("lonchik_7_7@walla.co.il")
-                .password("Samimi444").build();
-        app.getUserHelper().loginUserDtoLombok(userDTOLombok);
-        Assert.assertTrue(app.getUserHelper().validatePopUpMessageLoginIncorrect());
-    }
-
-    @Test(priority = 5)
-    public void negativePasswordWithoutNumbers(){
-        UserDTOLombok userDTOLombok = UserDTOLombok.builder()
+    @Test
+    public void negativeLoginPasswordWithoutNumbers(){
+        UserDTOLombok user = UserDTOLombok.builder()
                 .email("lonchik_7_7@walla.co.il")
                 .password("Samimi@era").build();
-        app.getUserHelper().loginUserDtoLombok(userDTOLombok);
-        Assert.assertTrue(app.getUserHelper().validatePopUpMessageLoginIncorrect());
+        app.getUserHelper().loginUserDtoLombok(user);
+        flagOfPopUpMessage = true;
+                try {
+            Thread.sleep(1000);
+       } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assert.assertTrue(app.getUserHelper().validateMessageAlertLoginOrPasswordIncorrect());
     }
 
-    @Test(priority = 6)
-    public void negativePasswordWithoutLetters(){
-        UserDTOLombok userDTOLombok = UserDTOLombok.builder()
+    @Test
+    public void negativeLoginPasswordWithoutLetters(){
+        UserDTOLombok user = UserDTOLombok.builder()
                 .email("lonchik_7_7@walla.co.il")
                 .password("243567@145").build();
-        app.getUserHelper().loginUserDtoLombok(userDTOLombok);
-        Assert.assertTrue(app.getUserHelper().validatePopUpMessageLoginIncorrect());
+        app.getUserHelper().loginUserDtoLombok(user);
+        flagOfPopUpMessage = true;
+                try {
+            Thread.sleep(1000);
+       } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        Assert.assertTrue(app.getUserHelper().validateMessageAlertLoginOrPasswordIncorrect());
     }
 
 }

@@ -2,7 +2,6 @@ package manager;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import java.util.List;
 public class BaseHelper {
 
     Logger logger = LoggerFactory.getLogger(BaseHelper.class);//creation of Logger
-
     WebDriver driver;
 
     public BaseHelper(WebDriver driver) {
@@ -22,6 +20,7 @@ public class BaseHelper {
     }
 
     private WebElement findElementBase(By locator){
+        logger.info("searching element by locator: " + locator);
         System.out.println(locator);
         return driver.findElement(locator);
     }
@@ -32,8 +31,8 @@ public class BaseHelper {
     }
 
     public boolean isElementExist(By locator){
-        return !findElementsBase(locator).isEmpty();
-       // return findElementsBase(locator).size()>0;
+        //return !findElementsBase(locator).isEmpty();
+        return findElementsBase(locator).size()>0;
     }
 
 
@@ -55,7 +54,7 @@ public class BaseHelper {
     }
 
     public boolean isTextEqual(By locator, String expectedResult){
-        String actualResult = getTextBase(locator).toUpperCase();
+        String actualResult = getTextBase(locator);
         expectedResult = expectedResult.toUpperCase();
 
         if(expectedResult.equals(actualResult)){
@@ -67,6 +66,33 @@ public class BaseHelper {
 
     }
 
+    public boolean isTextContains(By locator, String expectedResult){
+        String actualResult = getTextBase(locator).toUpperCase();
+        expectedResult = expectedResult.toUpperCase();
+
+        if(actualResult.contains(expectedResult)){
+            return true;
+        }else{
+            System.out.println("expected result: " + expectedResult + "actual result: " + actualResult);
+            return false;
+        }
+
+    }
+
+    public String getTextAlert(){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        Alert alert = wait.until(ExpectedConditions.alertIsPresent());
+        return alert.getText().toUpperCase().trim();
+    }
+
+    public void clickAcceptAlert(){
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.alertIsPresent());
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
+    }
+
+
    public void jsClickBase(String locator){
        JavascriptExecutor js = (JavascriptExecutor) driver;
        js.executeScript(locator);
@@ -75,21 +101,18 @@ public class BaseHelper {
     public void clickByXY(By locator, double down, int right){
         //down 10 , right 12
         //creating object of rectangle -- we transfer there locator and it writes information about the element
-        Rectangle rect = findElementBase(locator).getRect();
-        int x = rect.getX()+ (rect.getWidth()/ 8);
-        int y = rect.getY()+ (rect.getHeight()/ 2);
-
-        Actions actions = new Actions(driver);
-        actions.moveByOffset(x,y).click().perform();
-
-
-//        Rectangle rectangle = findElementBase(locator).getRect();
-//        int x = rectangle.getX()+ (rectangle.getWidth()/right);
-//        int y = rectangle.getY()+ (rectangle.getHeight()/down);
+//        Rectangle rect = findElementBase(locator).getRect();
+//        int x = rect.getX()+ (rect.getWidth()/ 8);
+//        int y = rect.getY()+ (rect.getHeight()/ 2);
 //
 //        Actions actions = new Actions(driver);
 //        actions.moveByOffset(x,y).click().perform();
 
+        Rectangle rectangle = findElementBase(locator).getRect();
+        int x = rectangle.getX()+ (rectangle.getWidth()/right);
+        int y = (int) (rectangle.getY()+ (rectangle.getHeight()/down));
+        Actions actions = new Actions(driver);
+        actions.moveByOffset(x,y).click().perform();
     }
 
     public void refreshPage() {
