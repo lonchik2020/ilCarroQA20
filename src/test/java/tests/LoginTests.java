@@ -1,5 +1,6 @@
 package tests;
 
+import data.DataProviderLogin;
 import dto.UserDTO;
 import dto.UserDTOLombok;
 import dto.UserDTOWith;
@@ -34,6 +35,7 @@ public class LoginTests extends BaseTest{
 
     @Test(groups={"smoke"})
     public void positiveLoginUserDTO(){
+        //app.getUserHelper().refreshPage();
         UserDTO userDTO = new UserDTO("lonchik_7_7@walla.co.il", "Samimi@44@");
         logger.info("logger info - start test positiveLoginUserDTO");
 //        logger.info(String
@@ -54,7 +56,7 @@ public class LoginTests extends BaseTest{
         //app.getUserHelper().clickOkPopUpSuccessLogin();
     }
 
-    @Test
+    @Test(groups={"regression"})
     public void positiveLoginUserDTOWith(){
         UserDTOWith userDTOWith = new UserDTOWith().withEmail("lonchik_7_7@walla.co.il")
                 .withPassword("Samimi@44@");
@@ -62,30 +64,37 @@ public class LoginTests extends BaseTest{
         app.getUserHelper().login(userDTOWith);
         flagOfSuccessLogin = true;
         flagOfPopUpMessage = true;
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
     }
 
-    @Test(groups={"regression"})
-    public void positiveLoginUserDTOLombok(Method method){
+    @Test(dataProvider = "positiveDataLogin", dataProviderClass = DataProviderLogin.class)
+    public void positiveLoginUserDTOLombok(Method method, UserDTOLombok userDP){
+        app.getUserHelper().refreshPage();
         long timeStart, timeFinish;
 
-        UserDTOLombok user = UserDTOLombok.builder()
-                .email("lonchik_7_7@walla.co.il")
-                .password("Samimi@44@")
-                .build();
+//        UserDTOLombok user = UserDTOLombok.builder()
+//                .email("lonchik_7_7@walla.co.il")
+//                .password("Samimi@44@")
+//                .build();
 
         timeStart = System.currentTimeMillis();
         logger.info("logger info - start test positiveLoginUserDTOLombok ----> " + method.getName());
-        logger.info("Test date  ----> " + user.toString());
+        logger.info("Test date  ----> " + userDP.toString());
 
-        app.getUserHelper().loginUserDtoLombok(user);
+        app.getUserHelper().loginUserDtoLombok(userDP);
+        try {
+            Thread.sleep(3000);
+       } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         flagOfSuccessLogin = true;
         flagOfPopUpMessage = true;
-//        try {
-//            Thread.sleep(1000);
-//       } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
+
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
         timeFinish = System.currentTimeMillis();
         logger.info("Method finish ----> " + method.getName() + "method duration" + (timeFinish - timeStart));
@@ -108,12 +117,12 @@ public class LoginTests extends BaseTest{
         Assert.assertTrue(app.getUserHelper().validateMessageAlertLoginOrPasswordIncorrect());
     }
 
-    @Test
-    public void negativeLoginPasswordWithoutNumbers(){
-        UserDTOLombok user = UserDTOLombok.builder()
-                .email("lonchik_7_7@walla.co.il")
-                .password("Samimi@era").build();
-        app.getUserHelper().loginUserDtoLombok(user);
+    @Test(invocationCount = 2, dataProvider = "negativePasswordDataLogin", dataProviderClass = DataProviderLogin.class)
+    public void negativeLoginPasswordWithoutNumbers(UserDTOLombok userDP){
+//        UserDTOLombok user = UserDTOLombok.builder()
+//                .email("lonchik_7_7@walla.co.il")
+//                .password("Samimi@era").build();
+        app.getUserHelper().loginUserDtoLombok(userDP);
         flagOfPopUpMessage = true;
                 try {
             Thread.sleep(1000);

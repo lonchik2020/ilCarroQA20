@@ -7,6 +7,7 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import utils.ConfigProperties;
 
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
@@ -36,8 +37,8 @@ public class ApplicationManager {
         }
 
 
-        driver.navigate().to("https://ilcarro.web.app/search");
-        logger.info("navigated to the url: https://ilcarro.web.app/search");//instruction for Logger
+        driver.navigate().to(ConfigProperties.getProperty("url"));
+        logger.info("navigated to the url:" + ConfigProperties.getProperty("url"));//instruction for Logger
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         driver.register(new WDListener());
@@ -58,16 +59,14 @@ public class ApplicationManager {
 
 
     public void navigateToMainPage(){
-        driver.navigate().to("https://ilcarro.web.app/search");
+        driver.navigate().to(ConfigProperties.getProperty("url"));
     }
 
     public boolean isThePageIsHomePage(){
         String url = driver.getCurrentUrl();
         System.out.println(url + " -------> url");
-        return url.equals("https://ilcarro.web.app/search Start testing");
+        return url.equals(ConfigProperties.getProperty("url")+ " Start testing");
 
     }
-
-
 
 }
