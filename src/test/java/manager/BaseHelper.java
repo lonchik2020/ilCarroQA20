@@ -13,7 +13,11 @@ import java.util.List;
 public class BaseHelper {
 
     Logger logger = LoggerFactory.getLogger(BaseHelper.class);//creation of Logger
+
     WebDriver driver;
+
+//    ApplicationManager applicationManager = new ApplicationManager();
+//    WebDriverWait webDriverWait = new WebDriverWait(applicationManager.getDriver(), 10);
 
     public BaseHelper(WebDriver driver) {
         this.driver = driver;

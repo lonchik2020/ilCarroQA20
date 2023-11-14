@@ -21,12 +21,17 @@ public class ApplicationManager {
     EventFiringWebDriver driver;//object for connection between listener and web driver
     UserHelper userHelper;//1
 
+    ContactHelper contactHelper;//**1
+
     public ApplicationManager(){//constructor with default browser
         browser = System.getProperty("browser", BrowserType.CHROME);
     }
 
     public void init(){
+        //driver = new ChromeDriver();
         //driver = new EventFiringWebDriver(new ChromeDriver());
+
+        //mini fabrice
 
         if(browser.equals(BrowserType.CHROME)) {
             driver = new EventFiringWebDriver(new ChromeDriver());
@@ -40,17 +45,31 @@ public class ApplicationManager {
         driver.navigate().to(ConfigProperties.getProperty("url"));
         logger.info("navigated to the url:" + ConfigProperties.getProperty("url"));//instruction for Logger
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.register(new WDListener());
 
         userHelper = new UserHelper(driver);//2
-
+        contactHelper = new ContactHelper(driver);//**2
     }
 
 
     public UserHelper getUserHelper() {//3
         return userHelper;
     }
+
+    public ContactHelper getContactHelper(){//**3
+        return contactHelper;
+    }
+
+
+    public EventFiringWebDriver getDriver(){
+        if(driver == null){
+            init();
+        }
+        return driver;
+    }
+
+
 
     public void tearDown(){
         driver.quit();

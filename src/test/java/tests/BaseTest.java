@@ -51,11 +51,11 @@ public class BaseTest {
     }
 
 
-    public void logoutIfLogin(){
-        if(app.getUserHelper().btnLogoutExist()){
-            app.getUserHelper().logout();
-        }
-    }
+//    public void logoutIfLogin(){
+//        if(app.getUserHelper().btnLogoutExist()){
+//            app.getUserHelper().logout();
+//        }
+//    }
 
 
 }
