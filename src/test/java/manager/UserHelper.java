@@ -1,5 +1,6 @@
 package manager;
 
+import dto.AddCarDTO;
 import dto.UserDTO;
 import dto.UserDTOLombok;
 import dto.UserDTOWith;
@@ -10,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.regex.Pattern;
 
 public class UserHelper extends BaseHelper {
 
@@ -84,6 +87,12 @@ public class UserHelper extends BaseHelper {
 
 
     public boolean validatePopUpMessageSuccessAfterLogin() {
+
+        //explicity wait!!!
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.textMatches(textSuccessLoginPopUp, Pattern.compile("[\\w]*")));
+
+
         //String expectedResult = "Logged in success".toUpperCase();
         //String actualResult = getTextAlert();
         //WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -135,6 +144,8 @@ public class UserHelper extends BaseHelper {
     }
 
     public void clickOkPopUpSuccessLogin() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.textMatches(textSuccessLoginPopUp, Pattern.compile("[\\w]*")));
         jsClickBase(btnOkPopUpStr);
         //clickByXY(btnOkPopUp, 0.5, 2);
         //typeTextBase(textPopUpSuccessRegH1, String.valueOf(Keys.ESCAPE));
@@ -164,4 +175,6 @@ public class UserHelper extends BaseHelper {
     public boolean validateErrorEmptyEmailReg() {
         return isTextEqual(errorMessageWrongEmailReg, "Email is required");
     }
+
+
 }

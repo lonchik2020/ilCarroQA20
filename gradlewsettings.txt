@@ -10,3 +10,4 @@
 ./gradlew clean -Dgroups=regression shortTests
 ./gradlew clean -Dgroups=regression -Ptarget=prod shortTests
 ./gradlew clean -Dgroups=regression -Ptarget=fake shortTests
+./gradlew clean -Pbrowser=firefox shortTests

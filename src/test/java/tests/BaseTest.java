@@ -24,7 +24,7 @@ public class BaseTest {
 
     boolean flagOfSuccessLogin = false , flagOfPopUpMessage = false;
 
-    UserDTOLombok user = UserDTOLombok.builder()
+    UserDTOLombok userDTOLombok = UserDTOLombok.builder()
             .email("lonchik_7_7@walla.co.il")
             .password("Samimi@44@").build();
 

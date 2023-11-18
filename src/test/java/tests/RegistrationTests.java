@@ -1,5 +1,6 @@
 package tests;
 
+import data.DataProviderLogin;
 import dto.UserDTOLombok;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -47,6 +48,16 @@ public class RegistrationTests extends BaseTest{
 
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterRegistration());
     }
+
+
+//    @Test//(dataProvider = "loginCSV", dataProviderClass = DataProviderLogin.class)//to add params in the table of datalogin csv
+//    public void positiveRegistration(UserDTOLombok userDP){
+//        app.getUserHelper().fillRegistrationForm(userDP);
+//        flagOfSuccessLogin = true;
+//        flagOfPopUpMessage = true;
+//        Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterRegistration());
+//    }
+
 
     @Test
     public void negativeRegistrationWrongEmail(){

@@ -46,7 +46,7 @@ public class LoginTests extends BaseTest{
         flagOfPopUpMessage = true;
 
 //        try {
-//            Thread.sleep(3000);
+//            Thread.sleep(1000);
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
@@ -64,11 +64,11 @@ public class LoginTests extends BaseTest{
         app.getUserHelper().login(userDTOWith);
         flagOfSuccessLogin = true;
         flagOfPopUpMessage = true;
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
     }
 
@@ -87,11 +87,11 @@ public class LoginTests extends BaseTest{
         logger.info("Test date  ----> " + userDP.toString());
 
         app.getUserHelper().loginUserDtoLombok(userDP);
-        try {
-            Thread.sleep(3000);
-       } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+//        try {
+//            Thread.sleep(1000);
+//       } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         flagOfSuccessLogin = true;
         flagOfPopUpMessage = true;
 
@@ -99,6 +99,38 @@ public class LoginTests extends BaseTest{
         timeFinish = System.currentTimeMillis();
         logger.info("Method finish ----> " + method.getName() + "method duration" + (timeFinish - timeStart));
     }
+
+
+
+    @Test(dataProvider = "loginCSV", dataProviderClass = DataProviderLogin.class, groups={"smoke"})
+    public void positiveLoginUserDTOLombok2(Method method, UserDTOLombok user){
+        app.getUserHelper().refreshPage();
+        long timeStart, timeFinish;
+
+//        UserDTOLombok user = UserDTOLombok.builder()
+//                .email("lonchik_7_7@walla.co.il")
+//                .password("Samimi@44@")
+//                .build();
+
+        timeStart = System.currentTimeMillis();
+        logger.info("logger info - start test positiveLoginUserDTOLombok ----> " + method.getName());
+        logger.info("Test date  ----> " + user.toString());
+
+        app.getUserHelper().loginUserDtoLombok(user);
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+        flagOfSuccessLogin = true;
+        flagOfPopUpMessage = true;
+
+        Assert.assertTrue(app.getUserHelper().validatePopUpMessageSuccessAfterLogin());
+        timeFinish = System.currentTimeMillis();
+        logger.info("Method finish ----> " + method.getName() + "method duration" + (timeFinish - timeStart));
+    }
+
+
 
 
     @Test(groups={"smoke"})
